@@ -1,14 +1,9 @@
 // 全局常量配置
-const PROXY_URL = '/proxy/';    // 适用于 Cloudflare, Netlify (带重写), Vercel (带重写)
-// const HOPLAYER_URL = 'https://hoplayer.com/index.html';
+
+const PROXY_URL = 'https://cors.zme.ink/';
+const HOPLAYER_URL = 'https://hoplayer.com/index.html';
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
-
-// 密码保护配置
-const PASSWORD_CONFIG = {
-    localStorageKey: 'passwordVerified',  // 存储验证状态的键名
-    verificationTTL: 90 * 24 * 60 * 60 * 1000,  // 验证有效期（90天，约3个月）
-};
 
 // 网站信息配置
 const SITE_CONFIG = {
@@ -16,7 +11,7 @@ const SITE_CONFIG = {
     url: 'https://libretv.is-an.org',
     description: '免费在线视频搜索与观看平台',
     logo: 'https://images.icon-icons.com/38/PNG/512/retrotv_5520.png',
-    version: '1.0.3'
+    version: '1.0.0'
 };
 
 // API站点配置
@@ -96,6 +91,11 @@ const API_SITES = {
         name: 'souav资源',
         adult: true
     },
+    siwa: {
+        api: 'https://siwazyw.tv',
+        name: '丝袜资源',
+        adult: true
+    },
     r155: {
         api: 'https://155api.com',
         name: '155资源',
@@ -110,18 +110,49 @@ const API_SITES = {
         api: 'https://hsckzy.vip',
         name: '黄色仓库',
         adult: true,
-        detail: 'https://hsckzy.vip'
+        detail: 'https://hsckzy.vip' // 添加detail URL以便特殊处理
     },
-    zuid: {
-        api: 'https://api.zuidapi.com',
-        name: '最大资源'
-    },
-    yutu: {
-        api: 'https://yutuzy10.com',
-        name: '玉兔资源',
+    //新加
+    ckzy1: {
+        api: 'https://www.ckzy1.com',
+        name: 'ck资源',
         adult: true
-    }
-    // 您可以按需添加更多源
+    },
+    jkunzy: {
+        api: 'https://jkunzyapi.com',
+        name: 'jk资源',
+        adult: true
+    },
+    bwzy: {
+        api: 'https://api.bwzym3u8.com',
+        name: '百万资源',
+        adult: true
+    },
+    souavzy: {
+        api: 'https://api.souavzy.vip',
+        name: '搜资源',
+        adult: true
+    },
+    siwazyw: {
+        api: 'https://siwazyw.tv',
+        name: '丝袜资源',
+        adult: true
+    },
+    api: {
+        api: 'https://155api.com',
+        name: '155api资源',
+        adult: true
+    },
+    hsckzy: {
+        api: 'https://hsckzy.vip',
+        name: 'https://hsckzy.vip',
+        adult: true
+    },
+    apilsbzy1: {
+        api: 'https://apilsbzy1.com',
+        name: 'apilsbzy1资源',
+        adult: true
+    },
 };
 
 // 添加聚合搜索的配置选项
@@ -136,7 +167,7 @@ const AGGREGATED_SEARCH_CONFIG = {
 // 抽象API请求配置
 const API_CONFIG = {
     search: {
-    	// 修改搜索接口为返回更多详细数据（包括视频封面、简介和播放列表）
+        // 修改搜索接口为返回更多详细数据（包括视频封面、简介和播放列表）
         path: '/api.php/provide/vod/?ac=videolist&wd=',
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
@@ -144,7 +175,7 @@ const API_CONFIG = {
         }
     },
     detail: {
-    	// 修改详情接口也使用videolist接口，但是通过ID查询，减少请求次数
+        // 修改详情接口也使用videolist接口，但是通过ID查询，减少请求次数
         path: '/api.php/provide/vod/?ac=videolist&ids=',
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
@@ -186,7 +217,10 @@ const SECURITY_CONFIG = {
     enableXSSProtection: true,  // 是否启用XSS保护
     sanitizeUrls: true,         // 是否清理URL
     maxQueryLength: 100,        // 最大搜索长度
-    // allowedApiDomains 不再需要，因为所有请求都通过内部代理
+    allowedApiDomains: [        // 允许的API域名
+        'heimuer.xyz',
+        'ffzy5.tv'
+    ]
 };
 
 // 添加多个自定义API源的配置
@@ -198,8 +232,8 @@ const CUSTOM_API_CONFIG = {
     validateUrl: true,        // 验证URL格式
     cacheResults: true,       // 缓存测试结果
     cacheExpiry: 5184000000,  // 缓存过期时间(2个月)
-    adultPropName: 'isAdult' // 用于标记成人内容的属性名
+    adultPropName: 'isAdult'  // 用于标记成人内容的属性名
 };
 
 // 新增隐藏内置黄色采集站API的变量，默认为true
-const HIDE_BUILTIN_ADULT_APIS = true;
+const HIDE_BUILTIN_ADULT_APIS = false;
